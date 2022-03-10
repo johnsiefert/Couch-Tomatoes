@@ -7,6 +7,7 @@ type User {
     email: String
     tvCount: Int
     savedTv: [Tv]
+    friendList: [friends]
 }
 
 type Tv {
@@ -15,6 +16,7 @@ type Tv {
     image: String
     link: String
     title: String!
+    Year: String
 }
 
 type Auth {
