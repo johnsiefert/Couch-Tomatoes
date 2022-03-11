@@ -8,7 +8,7 @@ const typeDefs = gql`
     email: String
     friendCount: Int
     comments: [Comment]
-    friendsList: [User]
+    friends: [User]
   }
 
   type Comment {
