@@ -16,7 +16,7 @@ type Tv {
     image: String
     link: String
     title: String!
-    Year: String
+    year: String
 }
 
 type Auth {
