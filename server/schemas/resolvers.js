@@ -4,109 +4,132 @@ const { signToken } = require('../utils/auth');
 
 
 const resolvers = {
-    Query: {
-      me: async (parent, args, context) => {
-        if (context.user) {
-          const userData = await User.findOne({ _id: context.user._id })
-          .select('-__v -password');
+  Query: {
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+          .select('-__v -password')
+          .populate('comments')
+          .populate('friends');
 
-          return userData;
-        }
+        return userData;
+      }
 
-        throw new AuthenticationError('Not logged in');
-      },
+      throw new AuthenticationError('Not logged in');
     },
+    users: async () => {
+      return User.find()
+        .select('-__v -password')
+        .populate('comments')
+        .populate('friends');
+    },
+    user: async (parent, { username }) => {
+      return User.findOne({ username })
+        .select('-__v -password')
+        .populate('friends')
+        .populate('comments');
+    },
+    comments: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return Comment.find(params).sort({ createdAt: -1 });
+    },
+    comment: async (parent, { _id }) => {
+      return Comment.findOne({ _id });
+    }
+  },
 
-    Mutation: {
-        addUser: async (parent, args) => {
-          const user = await User.create(args);
-          const token = signToken(user);
+  Mutation: {
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
 
-          return { token, user };
-        },
-        login: async (parent, { email, password }) => {
-          const user = await User.findOne({ email });
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
-          if (!user) {
-            throw new AuthenticationError('Incorrect credentials');
-          }
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
 
-          const correctPw = await user.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
 
-          if (!correctPw) {
-            throw new AuthenticationError('Incorrect credentials');
-          }
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
 
-          const token = signToken(user);
-          return { token, user };
-        },
-        addComment: async (parent, args, context) => {
-          if (context.user) {
-            const comment = await Comment.create({ ...args, username: context.user.username });
+      const token = signToken(user);
+      return { token, user };
+    },
+    addComment: async (parent, args, context) => {
+      if (context.user) {
+        const comment = await Comment.create({ ...args, username: context.user.username });
 
-            await User.findByIdAndUpdate(
-              { _id: context.user._id },
-              { $push: { comments: comment._id } },
-              { new: true }
-            );
+        await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { comments: comment._id } },
+          { new: true }
+        );
 
-            return comment;
-          }
+        return comment;
+      }
 
-          throw new AuthenticationError('You need to be logged in!');
-        },
-        addReaction: async (parent, { commentId, reactionBody }, context) => {
-          if (context.user) {
-            const updatedComment = await Comment.findOneAndUpdate(
-              { _id: commentId },
-              { $push: { reactions: { reactionBody, username: context.user.username } } },
-              { new: true, runValidators: true }
-            );
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addReaction: async (parent, { commentId, reactionBody }, context) => {
+      if (context.user) {
+        const updatedComment = await Comment.findOneAndUpdate(
+          { _id: commentId },
+          { $push: { reactions: { reactionBody, username: context.user.username } } },
+          { new: true, runValidators: true }
+        );
 
-            return updatedComment;
-          }
+        return updatedComment;
+      }
 
-          throw new AuthenticationError('You need to be logged in!');
-        },
-        addFriend: async (parent, { friendId }, context) => {
-          if (context.user) {
-            const updatedUser = await User.findOneAndUpdate(
-              { _id: context.user._id },
-              { $addToSet: { friends: friendId } },
-              { new: true }
-            ).populate('friends');
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    addFriend: async (parent, { friendId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { friends: friendId } },
+          { new: true }
+        ).populate('friends');
 
-            return updatedUser;
-          }
+        return updatedUser;
+      }
 
-          throw new AuthenticationError('You need to be logged in!');
-        }
-      },
-        // saveTv: async (parent, { tvData }, context) => {
-        //   if (context.user) {
-        //     const updatedUser = await User.findByIdAndUpdate(
-        //       { _id: context.user._id },
-        //       { $push: { savedTv: tvData } },
-        //       { new: true }
-        //     );
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    saveTv: async (parent, { tvData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedTv: tvData } },
+          { new: true }
+        );
 
-        //     return updatedUser;
-        //   }
+        return updatedUser;
+      }
 
-        //   throw new AuthenticationError('You need to be logged in!');
-        // },
-        // removeTv: async (parent, { tvId }, context) => {
-        //   if (context.user) {
-        //     const updatedUser = await User.findOneAndUpdate(
-        //       { _id: context.user._id },
-        //       { $pull: { savedTv: { tvId } } },
-        //       { new: true }
-        //     );
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeTv: async (parent, { tvId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedTv: { tvId } } },
+          { new: true }
+        );
 
-        //     return updatedUser;
-        //   }
+        return updatedUser;
+      }
 
-        //   throw new AuthenticationError('You need to be logged in!');
-        // }
-      };
+      throw new AuthenticationError('You need to be logged in!');
+    },
+  }
+};
+
+
 module.exports = resolvers;
