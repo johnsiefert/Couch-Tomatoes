@@ -14,7 +14,7 @@ export const getSavedTvIds = () => {
     }
   };
 
-  export const removeTvId = (bookId) => {
+  export const removeTvId = (tvId) => {
     const savedTvIds = localStorage.getItem('saved_tv')
       ? JSON.parse(localStorage.getItem('saved_tv'))
       : null;

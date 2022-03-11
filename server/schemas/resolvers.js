@@ -102,32 +102,34 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    saveTv: async (parent, { tvData }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $push: { savedTv: tvData } },
-          { new: true }
-        );
 
-        return updatedUser;
-      }
+    ///can be uncomment ones the saved Tv page is created...
+    // saveTv: async (parent, { tvData }, context) => {
+    //   if (context.user) {
+    //     const updatedUser = await User.findByIdAndUpdate(
+    //       { _id: context.user._id },
+    //       { $push: { savedTv: tvData } },
+    //       { new: true }
+    //     );
 
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    removeTv: async (parent, { tvId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { savedTv: { tvId } } },
-          { new: true }
-        );
+    //     return updatedUser;
+    //   }
 
-        return updatedUser;
-      }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+    // removeTv: async (parent, { tvId }, context) => {
+    //   if (context.user) {
+    //     const updatedUser = await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $pull: { savedTv: { tvId } } },
+    //       { new: true }
+    //     );
 
-      throw new AuthenticationError('You need to be logged in!');
-    },
+    //     return updatedUser;
+    //   }
+
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
   }
 };
 
