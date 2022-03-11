@@ -3,7 +3,6 @@ const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 
-
 const resolvers = {
     Query: {
       me: async (parent, args, context) => {
@@ -41,34 +40,73 @@ const resolvers = {
           const token = signToken(user);
           return { token, user };
         },
-        saveTv: async (parent, { tvData }, context) => {
+        addComment: async (parent, args, context) => {
           if (context.user) {
-            const updatedUser = await User.findByIdAndUpdate(
+            const comment = await Comment.create({ ...args, username: context.user.username });
+
+            await User.findByIdAndUpdate(
               { _id: context.user._id },
-              { $push: { savedTv: tvData } },
+              { $push: { comments: comment._id } },
               { new: true }
             );
 
-            return updatedUser;
+            return comment;
           }
 
           throw new AuthenticationError('You need to be logged in!');
         },
-        removeTv: async (parent, { tvId }, context) => {
+        addReaction: async (parent, { commentId, reactionBody }, context) => {
+          if (context.user) {
+            const updatedComment = await Comment.findOneAndUpdate(
+              { _id: commentId },
+              { $push: { reactions: { reactionBody, username: context.user.username } } },
+              { new: true, runValidators: true }
+            );
+
+            return updatedComment;
+          }
+
+          throw new AuthenticationError('You need to be logged in!');
+        },
+        addFriend: async (parent, { friendId }, context) => {
           if (context.user) {
             const updatedUser = await User.findOneAndUpdate(
               { _id: context.user._id },
-              { $pull: { savedTv: { tvId } } },
+              { $addToSet: { friends: friendId } },
               { new: true }
-            );
+            ).populate('friends');
 
             return updatedUser;
           }
 
           throw new AuthenticationError('You need to be logged in!');
-        },
+        }
       },
+        // saveTv: async (parent, { tvData }, context) => {
+        //   if (context.user) {
+        //     const updatedUser = await User.findByIdAndUpdate(
+        //       { _id: context.user._id },
+        //       { $push: { savedTv: tvData } },
+        //       { new: true }
+        //     );
 
+        //     return updatedUser;
+        //   }
 
-};
+        //   throw new AuthenticationError('You need to be logged in!');
+        // },
+        // removeTv: async (parent, { tvId }, context) => {
+        //   if (context.user) {
+        //     const updatedUser = await User.findOneAndUpdate(
+        //       { _id: context.user._id },
+        //       { $pull: { savedTv: { tvId } } },
+        //       { new: true }
+        //     );
+
+        //     return updatedUser;
+        //   }
+
+        //   throw new AuthenticationError('You need to be logged in!');
+        // }
+      };
 module.exports = resolvers;

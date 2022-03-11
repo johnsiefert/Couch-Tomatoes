@@ -7,8 +7,25 @@ type User {
     email: String
     tvCount: Int
     savedTv: [Tv]
-    friendList: [friends]
+    comments: [Comment]
+    friends: [User]
 }
+
+type Comment {
+    _id: ID
+    commentText: String
+    createdAt: String
+    username: String
+    reactionCount: Int
+    reactions: [Reaction]
+  }
+
+  type Reaction {
+    _id: ID
+    reactionBody: String
+    createdAt: String
+    username: String
+  }
 
 type Tv {
     tvId: ID!
@@ -34,13 +51,19 @@ input TvInput{
 
 type Query {
     me: User
+    users: [User]
+    user(username: String!): User
+    comments(username: String): [Comment]
+    comment(_id: ID!): Comment
 }
 
 type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveTv(tvData: TvInput!): User
-    removeTv(tvId: ID!): User
+
+    addComment(commentText: String!): Comment
+    addReaction(commentId: ID!, reactionBody: String!): Comment
+    addFriend(friendId: ID!): User
   }
 `;
 
