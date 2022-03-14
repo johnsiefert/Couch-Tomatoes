@@ -76,19 +76,6 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    addReaction: async (parent, { commentId, reactionBody }, context) => {
-      if (context.user) {
-        const updatedComment = await Comment.findOneAndUpdate(
-          { _id: commentId },
-          { $push: { reactions: { reactionBody, username: context.user.username } } },
-          { new: true, runValidators: true }
-        );
-
-        return updatedComment;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
-    },
     addFriend: async (parent, { friendId }, context) => {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
