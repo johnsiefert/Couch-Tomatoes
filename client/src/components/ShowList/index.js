@@ -11,7 +11,6 @@ function ShowList() {
     fetch(URL)
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       let showsArray = [];
       for (let i = 0; i < 10; i++) {
         showsArray.push(data.results[i]);
@@ -33,11 +32,11 @@ function ShowList() {
     <>
       {displayShows.map((show) => {
         return ( 
-        <section>
-        <p id={show.showId}>{show.showName} {`(${show.showYear})`}</p>
-        <img src={`https://image.tmdb.org/t/p/w200${show.showPoster}`}></img>
-        <p>{show.showSummary.length <= 280 ? show.showSummary : show.showSummary.slice(0, 280) + " (...)"}</p>
-      </section>
+        <div key={show.showId}>
+          <p id={show.showId}>{show.showName} {`(${show.showYear})`}</p>
+          <img src={`https://image.tmdb.org/t/p/w200${show.showPoster}`}></img>
+          <p>{show.showSummary.length <= 280 ? show.showSummary : show.showSummary.slice(0, 280) + " (...)"}</p>
+        </div>
         )
       })}
     </>

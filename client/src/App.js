@@ -1,18 +1,16 @@
 import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 
-// import CommentForm from './components/CommentForm';
-// import CommentList from './components/CommentList';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
-// import FriendList from './components/FriendList';
-// import Header from './components/Header';
-// import ReactionForm from './components/ReactionForm';
-// import ReactionList from './components/ReactionList';
-// import ShowList from './components/ShowList';
 
 import Home from './pages/Home';
+import LoginSignup from './pages/LoginSignup';
+import Profile from './pages/Profile';
+import SingleShow from './pages/SingleShow';
+import NoMatch from './pages/NoMatch';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -41,12 +39,19 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Nav />
-      <div className="d-flex justify-content-center">
-        <p className="">Couch Tomatoes to be developed!</p>  
-      </div>
-      <Home />
-      <Footer />
+      <Router>
+        <Nav />
+          <div className='container'>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/loginSignup" component={LoginSignup} />
+              <Route exact path="/profile/:username?" component={Profile} />
+              <Route exact path="/show/:id" component={SingleShow} />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
+        <Footer />
+      </Router>
     </ApolloProvider>
   );
 };
