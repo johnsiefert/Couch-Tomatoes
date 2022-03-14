@@ -7,13 +7,6 @@ export const QUERY_COMMENTS = gql`
       commentText
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
-        createdAt
-        username
-        reactionBody
-      }
     }
   }
 `;
@@ -25,13 +18,6 @@ export const QUERY_COMMENT = gql`
       commentText
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
-        createdAt
-        username
-        reactionBody
-      }
     }
   }
 `;
@@ -68,7 +54,6 @@ export const QUERY_ME = gql`
         image
         description
         title
-        link
       }
         comments {
         _id
