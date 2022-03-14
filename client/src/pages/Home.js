@@ -9,7 +9,7 @@ import { QUERY_COMMENTS, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 
 function Home() {
-  
+
   const { loading, data } = useQuery(QUERY_COMMENTS);
   const { data: userData } =useQuery(QUERY_ME);
 
@@ -20,6 +20,14 @@ function Home() {
     <>
       <main>
         <ShowList />
+
+        <div className="flex-row justify-space-between">
+        {loggedIn && (
+          <div className="col-12 mb-3">
+            <CommentForm />
+          </div>
+        )}
+        </div>
       </main>
     </>
   );
