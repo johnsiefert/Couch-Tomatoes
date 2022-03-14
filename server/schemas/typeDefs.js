@@ -16,15 +16,6 @@ type Comment {
     commentText: String
     createdAt: String
     username: String
-    reactionCount: Int
-    reactions: [Reaction]
-  }
-
-  type Reaction {
-    _id: ID
-    reactionBody: String
-    createdAt: String
-    username: String
   }
 
 type Tv {
@@ -34,6 +25,7 @@ type Tv {
     link: String
     title: String!
     year: String
+    comments: [Comment]
 }
 
 type Auth {
@@ -62,9 +54,7 @@ type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
 
-
     addComment(commentText: String!): Comment
-    addReaction(commentId: ID!, reactionBody: String!): Comment
     addFriend(friendId: ID!): User
   }
 `;
