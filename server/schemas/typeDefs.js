@@ -27,25 +27,45 @@ const typeDefs = gql`
     username: String
   }
 
-  type Query {
+type Tv {
+    tvId: ID!
+    description: String
+    image: String
+    link: String
+    title: String!
+    year: String
+}
+
+type Auth {
+    token: ID!
+    user: User
+}
+
+input TvInput{
+    description: String!
+    tvId: String!
+    image: String
+    link: String
+    title: String!
+    year: String
+}
+
+type Query {
     me: User
     users: [User]
     user(username: String!): User
     comments(username: String): [Comment]
     comment(_id: ID!): Comment
-  }
+}
 
-  type Mutation {
+type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+
+
     addComment(commentText: String!): Comment
     addReaction(commentId: ID!, reactionBody: String!): Comment
     addFriend(friendId: ID!): User
-  }
-
-  type Auth {
-    token: ID!
-    user: User
   }
 `;
 

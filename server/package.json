@@ -1,5 +1,6 @@
 {
   "name": "mern-server",
+  "name": "couch-tomatoes",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -20,6 +21,6 @@
     "mongoose": "^5.9.9"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.15"
   }
 }
