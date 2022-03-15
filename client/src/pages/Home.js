@@ -27,6 +27,17 @@ function Home() {
             <CommentForm />
           </div>
         )}
+          <div className={`col-12 mb-3 ${loggedIn && 'col-lg-8'}`}>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <CommentList
+              comments={comments}
+              title="Some Feed for Comment(s)..."
+            />
+
+          )}
+        </div>
         </div>
       </main>
     </>
