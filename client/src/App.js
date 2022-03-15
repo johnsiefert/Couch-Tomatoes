@@ -11,6 +11,7 @@ import LoginSignup from './pages/LoginSignup';
 import Profile from './pages/Profile';
 import SingleShow from './pages/SingleShow';
 import NoMatch from './pages/NoMatch';
+import SingleComment from './pages/SingleComment';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -47,8 +48,9 @@ function App() {
               <Route exact path="/loginSignup" component={LoginSignup} />
               <Route exact path="/profile/:username?" component={Profile} />
               <Route exact path="/show/:id" component={SingleShow} />
+              <Route exact path="/comment/:id" component={SingleComment} />
               <Route component={NoMatch} />
-            </Switch>
+           </Switch>
           </div>
         <Footer />
       </Router>
