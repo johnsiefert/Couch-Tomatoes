@@ -1,5 +1,4 @@
 let userInput;
-let showName;
 const APIkey = 'a5bd1c7f91c8838824076a261e81c7c0';
 
 // calls TMDB API, returning top 10 most popular results, then displays them on the page -- need to get id from this and submit a second API call to get more relevant info such as the image
