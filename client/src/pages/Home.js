@@ -11,7 +11,6 @@ import Auth from '../utils/auth';
 function Home() {
 
   const { loading, data } = useQuery(QUERY_COMMENTS);
-  const { data: userData } =useQuery(QUERY_ME);
 
   const comments = data?.comments || [];
   const loggedIn = Auth.loggedIn();
