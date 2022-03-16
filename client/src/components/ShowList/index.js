@@ -23,9 +23,12 @@ function ShowList() {
       .then((data) => {
         let showsArray = [];
         for (let i = 0; i < 10; i++) {
+          if (data.results[i] === undefined ) {
+            break;
+          }
           showsArray.push(data.results[i]);
-        }
-        console.log(showsArray);
+        };
+        
         const showData = showsArray.map((show) => ({
           title: show.name,
           description: show.overview,

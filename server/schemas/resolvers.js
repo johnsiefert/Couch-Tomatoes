@@ -1,7 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Comment } = require('../models');
 const { signToken } = require('../utils/auth');
-
 
 const resolvers = {
   Query: {
@@ -73,47 +72,32 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    // addReaction: async (parent, { commentId, reactionBody }, context) => {
-    //   if (context.user) {
-    //     const updatedComment = await Comment.findOneAndUpdate(
-    //       { _id: commentId },
-    //       { $push: { reactions: { reactionBody, username: context.user.username } } },
-    //       { new: true, runValidators: true }
-    //     );
+    saveTv: async (parent, { tvId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedTv: tvId } },
+          { new: true }
+        ).populate('savedTv');
 
-    //     return updatedComment;
-    //   }
+        return updatedUser;
+      }
 
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      throw new AuthenticationError('You need to be logged in!');
+    },
+    removeTv: async (parent, { tvId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedTv: tvId } },
+          { new: true }
+        ).populate('savedTv');
 
-    ///can be uncomment ones the saved Tv page is created...
-    // saveTv: async (parent, { tvData }, context) => {
-    //   if (context.user) {
-    //     const updatedUser = await User.findByIdAndUpdate(
-    //       { _id: context.user._id },
-    //       { $push: { savedTv: tvData } },
-    //       { new: true }
-    //     );
+        return updatedUser;
+      }
 
-    //     return updatedUser;
-    //   }
-
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    // removeTv: async (parent, { tvId }, context) => {
-    //   if (context.user) {
-    //     const updatedUser = await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $pull: { savedTv: { tvId } } },
-    //       { new: true }
-    //     );
-
-    //     return updatedUser;
-    //   }
-
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
+      throw new AuthenticationError('You need to be logged in!');
+    }
   }
 };
 
