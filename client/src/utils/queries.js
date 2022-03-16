@@ -28,15 +28,10 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      friends {
-        _id
-        username
-      }
       comments {
         _id
         commentText
         createdAt
-        reactionCount
       }
     }
   }
@@ -55,21 +50,10 @@ export const QUERY_ME = gql`
         description
         title
       }
-        comments {
+      comments {
         _id
         commentText
         createdAt
-        reactionCount
-        reactions {
-          _id
-          createdAt
-          reactionBody
-          username
-        }
-      }
-      friends {
-        _id
-        username
       }
     }
   }

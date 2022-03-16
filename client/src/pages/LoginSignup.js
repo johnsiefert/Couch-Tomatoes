@@ -5,16 +5,25 @@ import { ADD_USER, LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const LoginSignup = () => {
-  const [formState, setFormState] = useState({ username: '', email: '', password: '' });
+  const [loginFormState, setLoginFormState] = useState({ email: '', password: '' });
+  const [signupFormState, setSignupFormState] = useState({ username: '', email: '', password: '' });
   const [addUser, { error }] = useMutation(ADD_USER);
   const [login, { err }] = useMutation(LOGIN_USER);
 
-  // update state based on form input changes
-  const handleChange = (event) => {
+  const handleLoginChange = (event) => {
     const { name, value } = event.target;
 
-    setFormState({
-      ...formState,
+    setLoginFormState({
+      ...loginFormState,
+      [name]: value,
+    });
+  };
+
+  const handleSignupChange = (event) => {
+    const { name, value } = event.target;
+
+    setSignupFormState({
+      ...signupFormState,
       [name]: value,
     });
   };
@@ -24,7 +33,7 @@ const LoginSignup = () => {
 
     try {
       const { data } = await login({
-        variables: { ...formState }
+        variables: { ...loginFormState }
       });
       Auth.login(data.login.token);
     } catch (e) {
@@ -37,7 +46,7 @@ const LoginSignup = () => {
 
     try {
       const { data } = await addUser({
-        variables: { ...formState }
+        variables: { ...signupFormState }
       });
       Auth.login(data.addUser.token);
     } catch (e) {
@@ -58,8 +67,8 @@ const LoginSignup = () => {
                 name='email'
                 type='email'
                 id='loginEmail'
-                value={formState.email}
-                onChange={handleChange}
+                value={loginFormState.email}
+                onChange={handleLoginChange}
               />
               <input
                 className='form-input'
@@ -67,8 +76,8 @@ const LoginSignup = () => {
                 name='password'
                 type='password'
                 id='loginPassword'
-                value={formState.password}
-                onChange={handleChange}
+                value={loginFormState.password}
+                onChange={handleLoginChange}
               />
               <button className='btn d-block w-100' type='submit'>
                 Submit
@@ -82,8 +91,8 @@ const LoginSignup = () => {
                 name='username'
                 type='username'
                 id='username'
-                value={formState.username}
-                onChange={handleChange}
+                value={signupFormState.username}
+                onChange={handleSignupChange}
               />
               <input
                 className='form-input'
@@ -91,8 +100,8 @@ const LoginSignup = () => {
                 name='email'
                 type='email'
                 id='signupEmail'
-                value={formState.email}
-                onChange={handleChange}
+                value={signupFormState.email}
+                onChange={handleSignupChange}
               />
               <input
                 className='form-input'
@@ -100,8 +109,8 @@ const LoginSignup = () => {
                 name='password'
                 type='password'
                 id='signupPassword'
-                value={formState.password}
-                onChange={handleChange}
+                value={signupFormState.password}
+                onChange={handleSignupChange}
               />
               <button className='btn d-block w-100' type='submit'>
                 Submit

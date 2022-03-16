@@ -31,43 +31,9 @@ export const ADD_COMMENT = gql`
       commentText
       createdAt
       username
-      reactionCount
-      reactions {
-        _id
-      }
     }
   }
 `;
-
-export const ADD_REACTION = gql`
-  mutation addReaction($commentId: ID!, $reactionBody: String!) {
-    addReaction(commentId: $commentId, reactionBody: $reactionBody) {
-      _id
-      reactionCount
-      reactions {
-        _id
-        reactionBody
-        createdAt
-        username
-      }
-    }
-  }
-`;
-
-export const ADD_FRIEND = gql`
-  mutation addFriend($id: ID!) {
-    addFriend(friendId: $id) {
-      _id
-      username
-      friendCount
-      friends {
-        _id
-        username
-      }
-    }
-  }
-`;
-
 
 export const SAVE_TV = gql`
   mutation saveBook($tvData: TvInput!) {
@@ -81,7 +47,6 @@ export const SAVE_TV = gql`
         image
         description
         title
-        link
       }
     }
   }
@@ -99,7 +64,6 @@ export const REMOVE_TV = gql`
         image
         description
         title
-        link
       }
     }
   }

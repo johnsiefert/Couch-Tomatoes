@@ -1,7 +1,7 @@
 const express = require('express');
 const {ApolloServer} = require('apollo-server-express');
 // import plugin to use GraphQL playground as landing page for server
-//const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core');
+const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core');
 const path = require('path');
 
 const {typeDefs, resolvers} = require('./schemas');
@@ -15,7 +15,7 @@ const startServer = async () => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-   // plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground],
     context: authMiddleware,
   });
   await server.start();
@@ -33,9 +33,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/public')));
 }
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public/index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../client/public/index.html'));
+// });
 
 db.once('open', () => {
   app.listen(PORT, () => {
