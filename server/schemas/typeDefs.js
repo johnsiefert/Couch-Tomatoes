@@ -18,11 +18,11 @@ type Comment {
   }
 
 type Tv {
-    tvId: ID!
+    tvId: String
     description: String
     image: String
     link: String
-    title: String!
+    title: String
     year: String
     comments: [Comment]
 }

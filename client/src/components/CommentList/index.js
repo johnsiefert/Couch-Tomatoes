@@ -25,10 +25,6 @@ const CommentList = ({ comments, title }) => {
             <div className="card-body">
               <Link to={`/comment/${comment._id}`}>
                 <p>{comment.commentText}</p>
-                {/* <p className="mb-0">
-                  Reactions: {comment.reactionCount} || Click to{' '}
-                  {comment.reactionCount ? 'see' : 'start'} the discussion!
-                </p> */}
               </Link>
             </div>
           </div>
