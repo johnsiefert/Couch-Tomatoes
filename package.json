@@ -1,6 +1,7 @@
 {
   "name": "couch-tomatoes",
   "version": "1.0.0",
+  "homepage": "https://couch-tomatoes.herokuapp.com/",
   "description": "",
   "main": "server/server.js",
   "scripts": {
@@ -20,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/johnsiefert/Couch-Tomatoes/issues"
   },
-  "homepage": "https://github.com/johnsiefert/Couch-Tomatoes#readme",
   "dependencies": {
     "concurrently": "^7.0.0"
   }
