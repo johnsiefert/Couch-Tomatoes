@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+import CommentForm from '../components/CommentForm';
+import CommentList from '../components/CommentList';
+
 function SingleShow() {
   const tvId = window.location.toString().split('/').pop();
   // move API key to environment variable before deployment
@@ -34,6 +37,8 @@ function SingleShow() {
           <p id={show.tvId}>{show.title} {`(${show.year})`}</p>
           <img src={`https://image.tmdb.org/t/p/w200${show.image}`}></img>
           <p>{show.description}</p>
+          {/* <CommentList />
+          <CommentForm /> */}
         </div>
         )
       })}

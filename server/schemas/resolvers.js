@@ -10,7 +10,6 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
           .populate('comments')
-          .populate('friends');
 
         return userData;
       }
@@ -21,12 +20,10 @@ const resolvers = {
       return User.find()
         .select('-__v -password')
         .populate('comments')
-        .populate('friends');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
-        .populate('friends')
         .populate('comments');
     },
     comments: async (parent, { username }) => {
@@ -89,19 +86,6 @@ const resolvers = {
 
     //   throw new AuthenticationError('You need to be logged in!');
     // },
-    addFriend: async (parent, { friendId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { friends: friendId } },
-          { new: true }
-        ).populate('friends');
-
-        return updatedUser;
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
-    },
 
     ///can be uncomment ones the saved Tv page is created...
     // saveTv: async (parent, { tvData }, context) => {

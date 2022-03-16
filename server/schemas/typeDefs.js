@@ -8,7 +8,6 @@ type User {
     tvCount: Int
     savedTv: [Tv]
     comments: [Comment]
-    friends: [User]
 }
 
 type Comment {
@@ -55,7 +54,6 @@ type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
 
     addComment(commentText: String!): Comment
-    addFriend(friendId: ID!): User
   }
 `;
 
