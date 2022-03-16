@@ -72,32 +72,32 @@ const resolvers = {
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    saveTv: async (parent, { tvId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { savedTv: tvId } },
-          { new: true }
-        ).populate('savedTv');
+    // saveTv: async (parent, { tvId }, context) => {
+    //   if (context.user) {
+    //     const updatedUser = await User.findByIdAndUpdate(
+    //       { _id: context.user._id },
+    //       { $addToSet: { savedTv: tvId } },
+    //       { new: true }
+    //     ).populate('savedTv');
 
-        return updatedUser;
-      }
+    //     return updatedUser;
+    //   }
 
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    removeTv: async (parent, { tvId }, context) => {
-      if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { savedTv: tvId } },
-          { new: true }
-        ).populate('savedTv');
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+    // removeTv: async (parent, { tvId }, context) => {
+    //   if (context.user) {
+    //     const updatedUser = await User.findOneAndUpdate(
+    //       { _id: context.user._id },
+    //       { $pull: { savedTv: tvId } },
+    //       { new: true }
+    //     ).populate('savedTv');
 
-        return updatedUser;
-      }
+    //     return updatedUser;
+    //   }
 
-      throw new AuthenticationError('You need to be logged in!');
-    }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // }
   }
 };
 
