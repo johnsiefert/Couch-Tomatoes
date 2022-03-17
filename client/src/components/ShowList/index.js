@@ -71,7 +71,7 @@ function ShowList() {
   }, []);
   
   return (
-    <>
+    <main className="min-vh-100">
       <form
       className="d-flex justify-content-around mb-3"
       onSubmit={handleSearch}
@@ -104,7 +104,7 @@ function ShowList() {
           </div>
         )
       })}
-    </>
+    </main>
   );
 };
 
