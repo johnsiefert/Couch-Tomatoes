@@ -17,7 +17,7 @@ function SingleShow() {
   const loggedIn = Auth.loggedIn();
 
   useEffect(() => {
-    const URL = 'https://api.themoviedb.org/3/tv/' + tvId + '?api_key=' + process.env.API_KEY;
+    const URL = 'https://api.themoviedb.org/3/tv/' + tvId + '?api_key=' + process.env.REACT_APP_API_KEY;
 
     fetch(URL)
     .then((res) => res.json())

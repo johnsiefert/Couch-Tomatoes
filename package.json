@@ -22,7 +22,9 @@
     "url": "https://github.com/johnsiefert/Couch-Tomatoes/issues"
   },
   "dependencies": {
-    "concurrently": "^7.0.0",
+    "concurrently": "^7.0.0"
+  },
+  "devDependencies": {
     "env-cmd": "^10.1.0"
   }
 }
