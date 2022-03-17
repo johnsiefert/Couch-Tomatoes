@@ -55,15 +55,15 @@ const LoginSignup = () => {
   };
 
   return (
-    <main className='flex-row justify-center mb-4'>
-      <div className='col-12 col-md-6'>
-        <div className='card'>
-          <h4 className='card-header'>Sign Up</h4>
-          <div className='card-body'>
-            <form onSubmit={handleLoginSubmit}>
+    <main className='d-flex justify-content-around min-vh-100'>
+      <div className='col-5'>
+        <div className='card mb-3'>
+          <h4 className='card-header'>Login</h4>
+          <div className='card-body d-flex'>
+            <form onSubmit={handleLoginSubmit} className="d-block justify-content-around">
               <input
-                className='form-input'
-                placeholder='Your email'
+                className='form-input d-block my-3'
+                placeholder='email'
                 name='email'
                 type='email'
                 id='loginEmail'
@@ -71,7 +71,7 @@ const LoginSignup = () => {
                 onChange={handleLoginChange}
               />
               <input
-                className='form-input'
+                className='form-input d-block my-3'
                 placeholder='******'
                 name='password'
                 type='password'
@@ -79,15 +79,22 @@ const LoginSignup = () => {
                 value={loginFormState.password}
                 onChange={handleLoginChange}
               />
-              <button className='btn d-block w-100' type='submit'>
-                Submit
+              <button className='btn btn-danger' type='submit'>
+                Login!
               </button>
             </form>
             {err && <div>Login failed</div>}
-            <form onSubmit={handleSignupSubmit}>
+          </div>
+        </div>
+      </div>
+      <div className='col-5'>
+        <div className='card mb-3'>
+          <h4 className='card-header'>Signup</h4>
+          <div className='card-body'>
+          <form onSubmit={handleSignupSubmit}>
               <input
-                className='form-input'
-                placeholder='Your username'
+                className='form-input d-block my-3'
+                placeholder='username'
                 name='username'
                 type='username'
                 id='username'
@@ -95,8 +102,8 @@ const LoginSignup = () => {
                 onChange={handleSignupChange}
               />
               <input
-                className='form-input'
-                placeholder='Your email'
+                className='form-input d-block my-3'
+                placeholder='email'
                 name='email'
                 type='email'
                 id='signupEmail'
@@ -104,7 +111,7 @@ const LoginSignup = () => {
                 onChange={handleSignupChange}
               />
               <input
-                className='form-input'
+                className='form-input d-block my-3'
                 placeholder='******'
                 name='password'
                 type='password'
@@ -112,8 +119,8 @@ const LoginSignup = () => {
                 value={signupFormState.password}
                 onChange={handleSignupChange}
               />
-              <button className='btn d-block w-100' type='submit'>
-                Submit
+              <button className='btn btn-danger' type='submit'>
+                Signup!
               </button>
             </form>
             {error && <div>Signup failed</div>}

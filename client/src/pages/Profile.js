@@ -1,9 +1,6 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-
-import CommentList from '../components/CommentList';
-import CommentForm from '../components/CommentForm';
+import { useQuery } from '@apollo/client';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -31,20 +28,17 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <main className="min-vh-100">
       <div className="flex-row mb-3">
-        <h2 className="bg-dark text-secondary p-3 display-inline-block">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
+        <h2 className="bg-danger text-light p-3 display-inline-block">
+          Viewing {userParam ? `${user.username}'s` : 'your'} profile
         </h2>
       </div>
 
       <div className="flex-row justify-space-between mb-3">
-        {/* <div className="col-12 mb-3 col-lg-8">
-          <CommentList comments={user.comments} title={`${user.username}'s comments...`} />  
-        </div> */}
+        {/* savedTv would be displayed here */}
       </div>
-      {/* <div className="mb-3">{!userParam && <CommentForm />}</div> */}
-    </div>
+    </main>
   );
 };
 

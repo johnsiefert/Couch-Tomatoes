@@ -9,22 +9,26 @@ function Nav() {
     Auth.logout();
   };
 
+  const loggedIn = Auth.loggedIn();
+
   return (
-    <header className="bg-secondary mb-4 py-2 flex-row align-center">
-      <div className="container flex-row justify-space-between-lg justify-center align-center">
-        <Link to="/">
-          <h1>Couch Tomatoes</h1>
+    <header className="bg-warning mb-3">
+      <div className="d-flex justify-content-between align-items-center">
+        <Link to="/" className="text-decoration-none">
+          <h1 className="ms-3 text-secondary">Couch Tomatoes</h1>
         </Link>
 
-        <nav className="text-center">
-          {Auth.loggedIn() ? (
+        <nav className="d-flex justify-content-between me-3">
+          {loggedIn ? (
             <>
-              <Link to="/profile">Me</Link>
-              <a href="/" onClick={logout}>Logout</a>
+              <Link to="/profile" className="text-decoration-none">
+                <p className="me-3 fs-4 text-secondary">Me</p>  
+              </Link>
+              <a href="/" onClick={logout} className="text-decoration-none fs-4 text-secondary">Logout</a>
             </>
           ) : (
             <>
-              <Link to="/loginSignup">Login/Signup</Link>
+              <Link to="/loginSignup" className="text-decoration-none text-secondary fs-4">Login/Signup</Link>
             </>
           )}
         </nav>
