@@ -47,7 +47,7 @@ function SingleShow() {
               <div class="card-body">
                 <h2 class="card-title ">{show.title}</h2>
                 <p class="card-text text-muted">{show.year.split('-', 1)}</p>
-                <p class="card-text">{show.description.length <= 280 ? show.description : show.description.slice(0, 280) + " (...)"}</p>
+                <p class="card-text">{show.description.length <= 280 ? show.description : show.description}</p>
                 {loggedIn && <button className="btn-danger my-1">Add Show</button>}
               </div>
             </div>
