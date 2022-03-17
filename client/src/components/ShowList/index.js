@@ -9,8 +9,8 @@ function ShowList() {
   
   const loggedIn = Auth.loggedIn();
 
-  const popularURL = 'https://api.themoviedb.org/3/tv/popular?api_key=' + process.env.REACT_APP_API_KEY;
-  const searchURL = 'https://api.themoviedb.org/3/search/tv?api_key='+ process.env.REACT_APP_API_KEY + '&query=' + searchText;
+  const popularURL = 'https://api.themoviedb.org/3/tv/popular?api_key=' + process.env.API_KEY;
+  const searchURL = 'https://api.themoviedb.org/3/search/tv?api_key='+ process.env.API_KEY + '&query=' + searchText;
 
   const handleChange = event => {
     setSearchText(event.target.value);
